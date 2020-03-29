@@ -1,0 +1,21 @@
+# NodeJS Basic
+
+This is a basic project part of a Bootcamp focused on Node, React and React Native.
+
+This is the first challenge. 
+
+
+## Built With
+
+* [ExpressJS](https://expressjs.com/): is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. 
+* [Nodemon](https://github.com/remy/nodemon#nodemon): is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.
+
+## Installation 
+
+Install the necessary packages:
+
+```yarn install```
+
+To run the app type the following:
+
+```yarn dev```
