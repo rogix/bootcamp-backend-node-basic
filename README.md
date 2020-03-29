@@ -1,8 +1,6 @@
-# NodeJS Basic
+# NodeJS Basics
 
-This is a basic project part of a Bootcamp focused on Node, React and React Native.
-
-This is the first challenge. 
+This is the first challenge of a Bootcamp focused on Node, React and React Native. 
 
 
 ## Built With
@@ -23,3 +21,5 @@ To run the app:
 ```
 yarn dev
 ```
+
+That is it :)
