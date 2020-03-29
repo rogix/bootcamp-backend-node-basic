@@ -12,10 +12,14 @@ This is the first challenge.
 
 ## Installation 
 
-Install the necessary packages:
+To install the necessary packages:
 
-```yarn install```
+```
+yarn install
+```
 
-To run the app type the following:
+To run the app:
 
-```yarn dev```
+```
+yarn dev
+```
