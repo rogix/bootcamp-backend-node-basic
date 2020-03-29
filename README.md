@@ -1,6 +1,6 @@
 # NodeJS Basics
 
-This is the first challenge of a Bootcamp focused on Node, React and React Native. 
+This is a simple CRUD project that add some project and tasks to the project. It can Create, Delete, Update and Read projects. 
 
 
 ## Built With
@@ -22,4 +22,4 @@ To run the app:
 yarn dev
 ```
 
-That is it :)
+That's it! :)
