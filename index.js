@@ -1,69 +1,89 @@
 const express = require("express");
 
-const server = express();
+const app = express();
 
 // Help me understand json
-server.use(express.json());
+app.use(express.json());
 
-const users = ['Maria', 'Pedro',  'Henrique'];
+const projects = [];
 
-// Hey, I am a middleware, I can get accessed everywhere
-function checkIfUserExists(req, res, next) {
-    if (!req.body.name) {
-        return res.status(400).json({error: 'User name is required'})
+// Hey, I am a middleware, I can get accessed anywhere
+function checkIfProjectExists(req, res, next) {
+    // ID is my unique name, so check if I am already there
+    const { id } = req.params;
+    const project = projects.find(p => p.id == id)
+
+    if (!project) {
+        return res.status(400).json({error: 'Ops! Project not found'})
     }
 
     return next();
 }
 
-function checkUserInArray(req, res, next) {
-    const user = users[req.params.index]
+function logRequests(req, res, next) {
 
-    if (!user) {
-        return res.status(400).json({error: 'User does not exists'})
-    }
-
-    req.user = user;
+    console.count('Number of Requisitions');
 
     return next();
 }
 
-// List all users
-server.get('/users', (req, res) => {
-    return res.json(users);
+app.use(logRequests);
+
+// List all projects 
+app.get('/projects', (req, res) => {
+    return res.json(projects);
 })
 
-// List users by id
-server.get('/users/:index', checkUserInArray, (req, res) => {
-    return res.json(req.user);
+// Create new project 
+app.post('/projects', (req, res) => {
+    // In order to find me later I will need some unique stuff, like ID?
+    const { id, title  } = req.body;
+
+    const project = {
+        id,
+        title,
+        tasks: []
+    }
+
+    // See that array up there? Cool, there is where I go.
+    projects.push(project);
+
+    return res.json(project);
 })
 
-// Create new user
-server.post('/users', checkIfUserExists, (req, res) => {
-    const { name } = req.body;
+// Update project based on ID
+app.put('/projects/:id', checkIfProjectExists, (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
 
-    users.push(name);
+    const project = projects.find(p => p.id == id);
 
-    return res.json(users);
+    project.title = title;
+
+    return res.json(project);
 })
 
-// Update user based on ID
-server.put('/users/:index', checkIfUserExists, checkUserInArray, (req, res) => {
-    const { index } = req.params;
-    const { name } = req.body;
+// Delete project based on ID
+app.delete('/projects/:id', (req, res) => {
+    const { id } = req.params;
 
-    users[index] = name;
+    const projectIndex = projects.findIndex(p => p.id == id);
 
-    return res.json(users);
+    projects.splice(projectIndex, 1);
+
+    return res.send();
 })
 
-// Delete users based on ID
-server.delete('/users/:index', checkUserInArray, (req, res) => {
-    const { index } = req.params;
+// Add new task
+app.post('/projects/:id/tasks', checkIfProjectExists, (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
 
-    users.splice(index, 1);
+    const project = projects.find(p => p.id == id);
 
-    return res.json(users);
+    project.tasks.push(title);
+
+    return res.json(project); 
 })
 
-server.listen(3000);
+app.listen(3000);
